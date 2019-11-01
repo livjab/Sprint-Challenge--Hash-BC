@@ -25,7 +25,10 @@ def proof_of_work(last_proof):
 
     print("Searching for next proof")
     proof = 0
-    #  TODO: Your code here
+
+    while not valid_proof(last_proof, proof):
+        #last_proof = proof
+        proof *= 3
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -38,9 +41,13 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456888...
     """
+    last_proof = f'{last_hash}'.encode()
+    last_proof_hash = hashlib.sha256(last_proof).hexdigest()
 
-    # TODO: Your code here!
-    pass
+    guess = f'{proof}'.encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+
+    return guess_hash[:6] == last_proof_hash[6:]
 
 
 if __name__ == '__main__':
@@ -53,7 +60,7 @@ if __name__ == '__main__':
     coins_mined = 0
 
     # Load or create ID
-    f = open("my_id.txt", "r")
+    f = open("/Users/ljohnson/repos/CS/Sprint-Challenge--Hash-BC/blockchain/my_id.txt", "r")
     id = f.read()
     print("ID is", id)
     f.close()
