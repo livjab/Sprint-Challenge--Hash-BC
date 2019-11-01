@@ -24,10 +24,10 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 1
+    proof = 49284
 
     while not valid_proof(last_proof, proof):
-        proof *= 7
+        proof += 7
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
